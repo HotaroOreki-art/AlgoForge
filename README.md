@@ -3,8 +3,11 @@
 **Your code. Your patterns. Your next move.**
 
 **Live app:** [https://algoforge-eta.vercel.app](https://algoforge-eta.vercel.app)  
+**Demo:** [https://youtu.be/cOEDCl7El-0](https://youtu.be/cOEDCl7El-0)  
 **API health:** [https://algoforge-eta.vercel.app/api/health](https://algoforge-eta.vercel.app/api/health)  
 **Database:** MongoDB Atlas is connected in production (`/api/health` reports `"db":"connected"`, `"inMemoryDb":false`).
+
+[![AlgoForge demo](https://img.youtube.com/vi/cOEDCl7El-0/maxresdefault.jpg)](https://youtu.be/cOEDCl7El-0)
 
 AlgoForge is a personal programming environment for competitive programmers. It turns public Codeforces history into a practice map: what you have solved, where you struggled, which techniques connect, and what is worth attempting next — plus a vault for lessons written in your own words.
 

@@ -1,5 +1,36 @@
+import { existsSync, readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { z } from 'zod';
+
+function applyEnvFile(filePath: string) {
+  if (!existsSync(filePath)) return;
+  for (const line of readFileSync(filePath, 'utf8').split(/\r?\n/)) {
+    const trimmed = line.trim();
+    if (!trimmed || trimmed.startsWith('#')) continue;
+    const eq = trimmed.indexOf('=');
+    if (eq < 1) continue;
+    const key = trimmed.slice(0, eq).trim();
+    let value = trimmed.slice(eq + 1).trim();
+    if (
+      (value.startsWith('"') && value.endsWith('"')) ||
+      (value.startsWith("'") && value.endsWith("'"))
+    ) {
+      value = value.slice(1, -1);
+    }
+    if (process.env[key] === undefined) process.env[key] = value;
+  }
+}
+
+/** Load repo-root / server `.env` for local runs. Skip in tests so Atlas is never used. */
+function loadLocalEnvFiles() {
+  if (process.env.NODE_ENV === 'test') return;
+  const here = fileURLToPath(new URL('.', import.meta.url));
+  applyEnvFile(resolve(here, '../../../.env'));
+  applyEnvFile(resolve(here, '../../.env'));
+}
+
+loadLocalEnvFiles();
 
 /**
  * Environment configuration. Validated once at startup so misconfiguration

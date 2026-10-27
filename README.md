@@ -2,6 +2,10 @@
 
 **Your code. Your patterns. Your next move.**
 
+**Live app:** [https://algoforge-eta.vercel.app](https://algoforge-eta.vercel.app)  
+**API health:** [https://algoforge-eta.vercel.app/api/health](https://algoforge-eta.vercel.app/api/health)  
+**Database:** MongoDB Atlas is connected in production (`/api/health` reports `"db":"connected"`, `"inMemoryDb":false`).
+
 AlgoForge is a personal programming environment for competitive programmers. It turns public Codeforces history into a practice map: what you have solved, where you struggled, which techniques connect, and what is worth attempting next — plus a vault for lessons written in your own words.
 
 It is not a generic contest tracker. The loop is:
@@ -112,7 +116,11 @@ A live Codeforces import is exercised in the browser against a real handle when 
 
 The repo is set up as a **Vercel Services** project (beta): a Vite frontend and an Express backend behind one URL.
 
-1. Create a MongoDB database (Atlas or similar) and copy the connection string.
+**Production:** [https://algoforge-eta.vercel.app](https://algoforge-eta.vercel.app) — Express API on the same origin, MongoDB Atlas as the database.
+
+To deploy your own copy:
+
+1. Create a MongoDB Atlas database and copy the connection string.
 2. Set production environment variables: `MONGODB_URI`, `JWT_SECRET` (and `JUDGE0_*` only if you want execution).
 3. Deploy with the Vercel CLI or a connected Git repository.
 
@@ -120,7 +128,7 @@ Same-origin `/api` means cookies work without `CLIENT_ORIGIN`. Leave that variab
 
 Health check: `GET /api/health`.
 
-Source: [github.com/HotaroOreki-art/AlgoForge](https://github.com/HotaroOreki-art/AlgoForge). Production deploy still needs a MongoDB Atlas (or similar) `MONGODB_URI` in the host’s secret store — it is not committed.
+Source: [github.com/HotaroOreki-art/AlgoForge](https://github.com/HotaroOreki-art/AlgoForge). Atlas credentials live in Vercel env vars and a local gitignored `.env` — they are not committed.
 
 ## Known limitations
 

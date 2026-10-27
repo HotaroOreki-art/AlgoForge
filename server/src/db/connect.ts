@@ -45,8 +45,9 @@ export async function connectDb(uriOverride?: string): Promise<typeof mongoose> 
     }
     mongoose.set('strictQuery', true);
     const conn = await mongoose.connect(uri, {
-      serverSelectionTimeoutMS: 8000,
+      serverSelectionTimeoutMS: env.isProd ? 12000 : 20000,
       maxPoolSize: env.isProd ? 5 : 10,
+      family: 4,
     });
     logger.info({ host: conn.connection.host, db: conn.connection.name }, 'MongoDB connected');
     return conn;

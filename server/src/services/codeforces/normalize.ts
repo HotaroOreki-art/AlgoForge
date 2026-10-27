@@ -115,13 +115,27 @@ export function dedupeSubmissions<T extends { platformSubmissionId: number }>(su
   return out;
 }
 
+/**
+ * Codeforces `user.info` returns titlePhoto/avatar on userpic.codeforces.org.
+ * That host is a Cloudflare CDN that often 503s (and historically 403s when
+ * the browser sends a foreign Referer). The same files are served stably from
+ * codeforces.com/userpic/. Protocol-relative URLs are also rewritten to https.
+ */
+export function rewriteCodeforcesAvatarUrl(raw: string | undefined | null): string | undefined {
+  if (!raw) return undefined;
+  let url = raw.trim();
+  if (!url) return undefined;
+  if (url.startsWith('//')) url = `https:${url}`;
+  return url.replace(/^https?:\/\/userpic\.codeforces\.org\//i, 'https://codeforces.com/userpic/');
+}
+
 export function normalizeProfile(u: CfUser) {
   return {
     rating: u.rating,
     maxRating: u.maxRating,
     rank: u.rank,
     maxRank: u.maxRank,
-    avatar: u.titlePhoto ?? u.avatar,
+    avatar: rewriteCodeforcesAvatarUrl(u.titlePhoto ?? u.avatar),
     country: u.country,
     organization: u.organization,
     friendOfCount: u.friendOfCount,

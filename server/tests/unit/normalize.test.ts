@@ -3,12 +3,14 @@ import {
   dedupeSubmissions,
   isValidHandle,
   normalizeProblem,
+  normalizeProfile,
   normalizeRatingHistory,
   normalizeSubmission,
   normalizeTags,
   normalizeVerdict,
   problemKey,
   problemUrl,
+  rewriteCodeforcesAvatarUrl,
   urlFromProblemKey,
 } from '../../src/services/codeforces/normalize.ts';
 import { cfSubmissionSchema } from '../../src/services/codeforces/types.ts';
@@ -110,5 +112,27 @@ describe('codeforces normalisation', () => {
     expect(isValidHandle('ab')).toBe(false);
     expect(isValidHandle('has space')).toBe(false);
     expect(isValidHandle('x'.repeat(25))).toBe(false);
+  });
+
+  it('rewrites Codeforces userpic CDN URLs onto codeforces.com', () => {
+    expect(rewriteCodeforcesAvatarUrl('https://userpic.codeforces.org/664/title/c1ef9e749cad14a0.jpg')).toBe(
+      'https://codeforces.com/userpic/664/title/c1ef9e749cad14a0.jpg',
+    );
+    expect(rewriteCodeforcesAvatarUrl('//userpic.codeforces.org/664/avatar/a113c1791cdcd2e1.jpg')).toBe(
+      'https://codeforces.com/userpic/664/avatar/a113c1791cdcd2e1.jpg',
+    );
+    expect(rewriteCodeforcesAvatarUrl('https://codeforces.com/userpic/664/title/c1ef9e749cad14a0.jpg')).toBe(
+      'https://codeforces.com/userpic/664/title/c1ef9e749cad14a0.jpg',
+    );
+    expect(rewriteCodeforcesAvatarUrl(undefined)).toBeUndefined();
+  });
+
+  it('stores the rewritten title photo on the normalised profile', () => {
+    const profile = normalizeProfile({
+      handle: 'Petr',
+      titlePhoto: 'https://userpic.codeforces.org/664/title/c1ef9e749cad14a0.jpg',
+      avatar: 'https://userpic.codeforces.org/664/avatar/a113c1791cdcd2e1.jpg',
+    });
+    expect(profile.avatar).toBe('https://codeforces.com/userpic/664/title/c1ef9e749cad14a0.jpg');
   });
 });

@@ -99,7 +99,14 @@ export function DashboardPage() {
             <TierLabel n="A" label="observed" note="imported from the platform" />
             <div className="dash__observed">
               <div className="panel ticks dash__profile">
-                {connection?.profile?.avatar && <img src={connection.profile.avatar} alt="" className="dash__avatar" />}
+                {connection?.profile?.avatar && (
+                  <img
+                    src={connection.profile.avatar}
+                    alt=""
+                    className="dash__avatar"
+                    referrerPolicy="no-referrer"
+                  />
+                )}
                 <div>
                   <p className="eyebrow">codeforces · {connection?.handle}</p>
                   <div className="dash__rating">

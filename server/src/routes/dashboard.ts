@@ -8,7 +8,7 @@ import { SavedProblem } from '../models/SavedProblem.ts';
 import { asyncHandler, getValidated, requireAuth, validate } from '../middleware/index.ts';
 import { computeStats, practiceSignals, type StatSubmission } from '../services/stats.ts';
 import { Concept } from '../models/Concept.ts';
-import { urlFromProblemKey } from '../services/codeforces/normalize.ts';
+import { rewriteCodeforcesAvatarUrl, urlFromProblemKey } from '../services/codeforces/normalize.ts';
 
 export const dashboardRouter = Router();
 dashboardRouter.use(requireAuth);
@@ -61,7 +61,20 @@ dashboardRouter.get(
       connection: connection
         ? {
             handle: connection.handle,
-            profile: connection.profile ?? null,
+            profile: connection.profile
+              ? {
+                  rating: connection.profile.rating,
+                  maxRating: connection.profile.maxRating,
+                  rank: connection.profile.rank,
+                  maxRank: connection.profile.maxRank,
+                  avatar: rewriteCodeforcesAvatarUrl(connection.profile.avatar),
+                  country: connection.profile.country,
+                  organization: connection.profile.organization,
+                  friendOfCount: connection.profile.friendOfCount,
+                  contribution: connection.profile.contribution,
+                  registrationTime: connection.profile.registrationTime,
+                }
+              : null,
             ratingHistory: connection.ratingHistory ?? [],
             lastSyncStatus: connection.lastSyncStatus,
             lastSyncError: connection.lastSyncError ?? null,

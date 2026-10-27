@@ -166,7 +166,14 @@ export function ConnectPage() {
           {connection && (
             <div className="connect__connected">
               <div className="connect__profile">
-                {connection.profile?.avatar && <img src={connection.profile.avatar} alt="" className="connect__avatar" />}
+                {connection.profile?.avatar && (
+                  <img
+                    src={connection.profile.avatar}
+                    alt=""
+                    className="connect__avatar"
+                    referrerPolicy="no-referrer"
+                  />
+                )}
                 <div>
                   <a href={`https://codeforces.com/profile/${connection.handle}`} target="_blank" rel="noreferrer" className="connect__handle mono">
                     {connection.handle} ↗

@@ -8,6 +8,7 @@ import { SyncRun } from '../models/SyncRun.ts';
 import { AppError } from '../lib/errors.ts';
 import { asyncHandler, getValidated, requireAuth, validate } from '../middleware/index.ts';
 import { syncCodeforces } from '../services/codeforces/sync.ts';
+import { rewriteCodeforcesAvatarUrl } from '../services/codeforces/normalize.ts';
 import type { CodeforcesClient } from '../services/codeforces/client.ts';
 import { loadEnv } from '../config/env.ts';
 
@@ -30,10 +31,24 @@ const connectSchema = z.object({
 
 function serializeConnection(c: InstanceType<typeof PlatformConnection> | null) {
   if (!c) return null;
+  const profile = c.profile
+    ? {
+        rating: c.profile.rating,
+        maxRating: c.profile.maxRating,
+        rank: c.profile.rank,
+        maxRank: c.profile.maxRank,
+        avatar: rewriteCodeforcesAvatarUrl(c.profile.avatar),
+        country: c.profile.country,
+        organization: c.profile.organization,
+        friendOfCount: c.profile.friendOfCount,
+        contribution: c.profile.contribution,
+        registrationTime: c.profile.registrationTime,
+      }
+    : null;
   return {
     platform: c.platform,
     handle: c.handle,
-    profile: c.profile ?? null,
+    profile,
     ratingHistory: c.ratingHistory ?? [],
     lastSyncStatus: c.lastSyncStatus,
     lastSyncError: c.lastSyncError ?? null,

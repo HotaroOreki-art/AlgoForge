@@ -24,10 +24,24 @@ export async function connectDb(uriOverride?: string): Promise<typeof mongoose> 
     if (!uri) {
       if (env.isProd) throw new Error('MONGODB_URI is required in production');
       const { MongoMemoryServer } = await import('mongodb-memory-server');
-      const server = await MongoMemoryServer.create();
+      // In development, keep the data on disk (gitignored) so hot reloads don't
+      // wipe accounts and imports. Tests set DEV_DB_PATH="" to stay ephemeral.
+      const dbPath = env.DEV_DB_PATH || undefined;
+      if (dbPath) {
+        const { mkdirSync } = await import('node:fs');
+        mkdirSync(dbPath, { recursive: true });
+      }
+      const server = await MongoMemoryServer.create(
+        dbPath ? { instance: { dbPath, storageEngine: 'wiredTiger', port: env.DEV_DB_PORT } } : undefined,
+      );
       memoryServer = server;
       uri = server.getUri('algoforge');
-      logger.warn({ uri }, 'MONGODB_URI not set — using in-memory MongoDB (data is NOT persisted between restarts)');
+      logger.warn(
+        { uri, dbPath: dbPath ?? null },
+        dbPath
+          ? 'MONGODB_URI not set — using a local MongoDB stored in DEV_DB_PATH (development only)'
+          : 'MONGODB_URI not set — using in-memory MongoDB (data is NOT persisted between restarts)',
+      );
     }
     mongoose.set('strictQuery', true);
     const conn = await mongoose.connect(uri, {

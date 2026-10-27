@@ -103,6 +103,10 @@ describe('Problem library', () => {
 
     const byName = await request(getApp()).get('/api/problems?q=watermelon').set('Cookie', alice);
     expect(byName.body.total).toBe(1);
+
+    // Free-text search also matches an exact tag, so typing a topic finds problems.
+    const byTagText = await request(getApp()).get('/api/problems?q=Binary%20Search').set('Cookie', alice);
+    expect(byTagText.body.total).toBe(byTag.body.total);
     expect(byName.body.problems[0].user.solvedOnPlatform).toBe(true);
     expect(byName.body.problems[0].url).toBe('https://codeforces.com/problemset/problem/4/A');
 

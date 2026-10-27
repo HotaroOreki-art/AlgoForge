@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url';
 import { z } from 'zod';
 
 /**
@@ -18,6 +19,10 @@ const envSchema = z.object({
     .optional()
     .transform((v) => (v === undefined ? undefined : v === 'true')),
   LOG_LEVEL: z.enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace', 'silent']).optional(),
+  // Development only: where the fallback MongoDB keeps its files so restarts
+  // don't lose data. Empty string = purely in-memory (tests use this).
+  DEV_DB_PATH: z.string().optional(),
+  DEV_DB_PORT: z.coerce.number().int().positive().optional(),
   // Optional: Judge0-compatible execution service for the coding workspace.
   JUDGE0_URL: z.string().trim().optional(),
   JUDGE0_KEY: z.string().trim().optional(),
@@ -51,8 +56,17 @@ export function loadEnv(source: NodeJS.ProcessEnv = process.env): Env {
     throw new Error('JWT_SECRET is required in production');
   }
 
+  // Development default: persist the fallback DB under <repo>/.data/mongo (gitignored).
+  const devDbPath =
+    env.DEV_DB_PATH !== undefined
+      ? env.DEV_DB_PATH
+      : env.NODE_ENV === 'development'
+        ? fileURLToPath(new URL('../../../.data/mongo', import.meta.url))
+        : '';
+
   cached = {
     ...env,
+    DEV_DB_PATH: devDbPath,
     jwtSecret: env.JWT_SECRET ?? 'algoforge-dev-secret-change-me-please',
     cookieSecure: env.COOKIE_SECURE ?? isProd,
     isProd,

@@ -101,7 +101,12 @@ problemsRouter.get(
     if (q.platform) filter.platform = q.platform;
     if (q.q) {
       const escaped = q.q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      filter.$or = [{ name: { $regex: escaped, $options: 'i' } }, { platformId: { $regex: `^${escaped}`, $options: 'i' } }];
+      // Name, platform id prefix (e.g. "1352C") or an exact tag ("two pointers").
+      filter.$or = [
+        { name: { $regex: escaped, $options: 'i' } },
+        { platformId: { $regex: `^${escaped}`, $options: 'i' } },
+        { tags: q.q.trim().toLowerCase() },
+      ];
     }
     if (q.tags) {
       const tags = q.tags

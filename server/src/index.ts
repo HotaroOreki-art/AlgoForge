@@ -1,4 +1,4 @@
-import { createApp } from './app.ts';
+import app from './app.ts';
 import { loadEnv } from './config/env.ts';
 import { logger } from './config/logger.ts';
 import { connectDb, disconnectDb } from './db/connect.ts';
@@ -8,7 +8,6 @@ async function main() {
   const env = loadEnv();
   await connectDb();
   await ensureGraphSeeded();
-  const app = createApp();
   const server = app.listen(env.SERVER_PORT, '0.0.0.0', () => {
     logger.info({ port: env.SERVER_PORT, env: env.NODE_ENV }, 'AlgoForge API listening');
   });

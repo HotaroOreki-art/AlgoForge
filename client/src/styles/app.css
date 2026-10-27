@@ -1,0 +1,9 @@
+/* App-level shared layout bits that don't belong to one page. */
+.boot {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-3);
+}

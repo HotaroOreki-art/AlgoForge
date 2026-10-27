@@ -1,0 +1,59 @@
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--s-3);
+  padding: var(--s-7) var(--s-5);
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--surface) 60%, transparent);
+  position: relative;
+}
+.empty__art {
+  opacity: 0.9;
+}
+.empty__title {
+  font-size: 1.15rem;
+}
+.empty__body {
+  color: var(--ink-2);
+  max-width: 44ch;
+}
+.empty__action {
+  margin-top: var(--s-2);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--s-3) 0;
+}
+.stat__label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.stat__value {
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  font-size: 2rem;
+  line-height: 1;
+  letter-spacing: var(--display-tracking);
+}
+.stat--accent .stat__value {
+  color: var(--accent);
+}
+.stat--accent2 .stat__value {
+  color: var(--accent-2);
+}
+.stat--accent3 .stat__value {
+  color: var(--accent-3);
+}
+.stat__hint {
+  font-size: 0.82rem;
+  color: var(--ink-2);
+}

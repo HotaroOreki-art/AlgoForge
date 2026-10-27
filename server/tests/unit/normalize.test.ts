@@ -9,6 +9,7 @@ import {
   normalizeVerdict,
   problemKey,
   problemUrl,
+  urlFromProblemKey,
 } from '../../src/services/codeforces/normalize.ts';
 import { cfSubmissionSchema } from '../../src/services/codeforces/types.ts';
 
@@ -41,6 +42,9 @@ describe('codeforces normalisation', () => {
     expect(problemKey(undefined, 'A')).toBe('codeforces:xA');
     expect(problemUrl(1352, 'C')).toBe('https://codeforces.com/problemset/problem/1352/C');
     expect(problemUrl(102341, 'B')).toBe('https://codeforces.com/gym/102341/problem/B');
+    expect(urlFromProblemKey('codeforces:1352C')).toBe('https://codeforces.com/problemset/problem/1352/C');
+    expect(urlFromProblemKey('codeforces:102341B')).toBe('https://codeforces.com/gym/102341/problem/B');
+    expect(urlFromProblemKey('codeforces:xA')).toBe('https://codeforces.com/problemset');
   });
 
   it('normalises tags: lowercases, trims, dedupes', () => {

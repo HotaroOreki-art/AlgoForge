@@ -143,6 +143,13 @@ export function normalizeRatingHistory(changes: CfRatingChange[]) {
     }));
 }
 
+/** Derive the platform URL from a stored problem key such as `codeforces:1352C`. */
+export function urlFromProblemKey(key: string): string {
+  const m = /^codeforces:(\d+)([A-Za-z].*)$/.exec(key);
+  if (!m) return 'https://codeforces.com/problemset';
+  return problemUrl(Number(m[1]), m[2]!);
+}
+
 /** Codeforces handles: 3–24 chars of letters, digits, `_`, `-`, `.`. */
 export function isValidHandle(handle: string): boolean {
   return /^[A-Za-z0-9_.-]{3,24}$/.test(handle);

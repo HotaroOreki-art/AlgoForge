@@ -1,0 +1,20 @@
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-weight: var(--display-weight);
+  letter-spacing: var(--display-tracking);
+  font-size: 1.25rem;
+  color: var(--ink);
+  text-decoration: none;
+}
+.wordmark--compact {
+  font-size: 1.05rem;
+}
+.wordmark__accent {
+  color: var(--accent);
+}
+.brandmark {
+  flex: none;
+}

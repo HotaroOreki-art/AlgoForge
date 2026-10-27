@@ -1,0 +1,60 @@
+.toasts {
+  position: fixed;
+  right: var(--s-5);
+  bottom: var(--s-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  z-index: 100;
+  max-width: min(380px, calc(100vw - 2 * var(--s-5)));
+}
+.toast {
+  padding: 12px 14px;
+  border-radius: var(--radius);
+  background: var(--surface-raised);
+  border: 1px solid var(--line-strong);
+  box-shadow: var(--shadow);
+  font-size: 0.92rem;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  animation: toast-in var(--t-slow) var(--ease-out);
+}
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+}
+.toast--ok {
+  border-color: color-mix(in srgb, var(--ok) 50%, transparent);
+}
+.toast--danger {
+  border-color: color-mix(in srgb, var(--danger) 55%, transparent);
+  color: var(--danger);
+}
+.toast--celebrate {
+  border-color: var(--accent);
+  background: linear-gradient(135deg, var(--surface-raised), var(--accent-soft));
+}
+.toast__spark {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent-2);
+  box-shadow:
+    0 0 0 3px var(--accent-2-soft),
+    0 0 18px var(--accent-2);
+  animation: spark 900ms var(--ease-out) 2;
+}
+@keyframes spark {
+  0% {
+    transform: scale(0.4);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

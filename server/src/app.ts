@@ -81,3 +81,6 @@ export function createApp(deps: AppDeps = {}) {
   app.use(errorHandler);
   return app;
 }
+
+/** Default export so Vercel can treat this file as the Express entrypoint. */
+export default createApp();

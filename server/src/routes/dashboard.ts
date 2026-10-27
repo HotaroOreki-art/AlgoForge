@@ -8,6 +8,7 @@ import { SavedProblem } from '../models/SavedProblem.ts';
 import { asyncHandler, getValidated, requireAuth, validate } from '../middleware/index.ts';
 import { computeStats, practiceSignals, type StatSubmission } from '../services/stats.ts';
 import { Concept } from '../models/Concept.ts';
+import { urlFromProblemKey } from '../services/codeforces/normalize.ts';
 
 export const dashboardRouter = Router();
 dashboardRouter.use(requireAuth);
@@ -89,12 +90,13 @@ dashboardRouter.get(
 
     const byProblem = new Map<
       string,
-      { problemKey: string; problemName: string; rating: number | null; tags: string[]; solved: boolean; attempts: number; lastAt: Date; verdicts: string[] }
+      { problemKey: string; problemName: string; url: string; rating: number | null; tags: string[]; solved: boolean; attempts: number; lastAt: Date; verdicts: string[] }
     >();
     for (const s of subs) {
       const p = byProblem.get(s.problemKey) ?? {
         problemKey: s.problemKey,
         problemName: s.problemName,
+        url: urlFromProblemKey(s.problemKey),
         rating: s.problemRating ?? null,
         tags: s.tags,
         solved: false,

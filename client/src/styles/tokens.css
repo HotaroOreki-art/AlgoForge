@@ -1,0 +1,188 @@
+/* =====================================================================
+   AlgoForge design tokens
+   Three personalities, one logic. Everything visual flows from these
+   variables; components never hardcode colours or fonts.
+   ===================================================================== */
+
+:root {
+  /* spacing & shape */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+  --s-8: 64px;
+  --s-9: 96px;
+  --radius-sm: 4px;
+  --radius: 8px;
+  --radius-lg: 14px;
+  --radius-pill: 999px;
+  --maxw: 1320px;
+
+  /* motion */
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --t-fast: 120ms;
+  --t: 220ms;
+  --t-slow: 480ms;
+
+  /* category colours are shared across themes but tuned per theme */
+  --cat-searching: var(--accent);
+  --cat-arrays: var(--accent-2);
+  --cat-graphs: var(--accent-3);
+  --cat-dp: var(--warn);
+  --cat-strings: var(--info);
+  --cat-math: var(--ink-2);
+  --cat-structures: var(--accent);
+  --cat-greedy: var(--accent-2);
+}
+
+/* ---------------------------------------------------------------------
+   THEME A — AFTER DARK
+   Cyberpunk developer environment. Near-black greens, electric cyan,
+   restrained acid-green, occasional magenta. Fine technical grid.
+   --------------------------------------------------------------------- */
+:root,
+[data-theme='after-dark'] {
+  color-scheme: dark;
+  --bg: #060a09;
+  --bg-2: #0a110f;
+  --surface: #0e1613;
+  --surface-2: #131e1a;
+  --surface-raised: #182622;
+  --line: rgba(120, 255, 214, 0.12);
+  --line-strong: rgba(120, 255, 214, 0.28);
+  --ink: #e8f4ef;
+  --ink-2: #9fb6ad;
+  --ink-3: #5f776e;
+  --accent: #27f0d0;
+  --accent-ink: #04231d;
+  --accent-soft: rgba(39, 240, 208, 0.12);
+  --accent-2: #b7ff3c;
+  --accent-2-soft: rgba(183, 255, 60, 0.12);
+  --accent-3: #ff3dd8;
+  --accent-3-soft: rgba(255, 61, 216, 0.14);
+  --ok: #58f0a6;
+  --warn: #ffb648;
+  --danger: #ff5d7a;
+  --info: #6cb8ff;
+  --focus: #27f0d0;
+  --shadow: 0 20px 60px -20px rgba(0, 0, 0, 0.8), 0 0 0 1px var(--line);
+  --glow: 0 0 28px rgba(39, 240, 208, 0.25);
+
+  --font-display: 'Syne', 'Space Grotesk', system-ui, sans-serif;
+  --font-body: 'Space Grotesk', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --display-weight: 800;
+  --display-tracking: -0.03em;
+  --display-scale: 0.8; /* Syne is wide; keep the hero to three lines */
+  --display-transform: none;
+
+  --grid-color: rgba(120, 255, 214, 0.05);
+  --grid-size: 32px;
+  --bg-image:
+    radial-gradient(1200px 600px at 80% -10%, rgba(39, 240, 208, 0.08), transparent 60%),
+    radial-gradient(800px 500px at -10% 110%, rgba(255, 61, 216, 0.06), transparent 60%);
+  --surface-blur: 0px;
+}
+
+/* ---------------------------------------------------------------------
+   THEME B — DREAMSCAPE
+   Original playful anime-inspired twilight. Soft violet dusk, sakura
+   pink, warm yellow, sky blue. Rounded, warm, a little bouncy.
+   --------------------------------------------------------------------- */
+[data-theme='dreamscape'] {
+  color-scheme: dark;
+  --bg: #1d1736;
+  --bg-2: #241c42;
+  --surface: #2a2150;
+  --surface-2: #332862;
+  --surface-raised: #3d3072;
+  --line: rgba(255, 214, 236, 0.14);
+  --line-strong: rgba(255, 214, 236, 0.3);
+  --ink: #fbf4ff;
+  --ink-2: #c9b8e3;
+  --ink-3: #8b7aa8;
+  --accent: #ff8fb8;
+  --accent-ink: #3a0f22;
+  --accent-soft: rgba(255, 143, 184, 0.16);
+  --accent-2: #ffd36e;
+  --accent-2-soft: rgba(255, 211, 110, 0.16);
+  --accent-3: #7fe3ff;
+  --accent-3-soft: rgba(127, 227, 255, 0.16);
+  --ok: #8df0b8;
+  --warn: #ffbf69;
+  --danger: #ff7a95;
+  --info: #9fc9ff;
+  --focus: #ffd36e;
+  --shadow: 0 24px 60px -24px rgba(20, 10, 50, 0.9), 0 0 0 1px var(--line);
+  --glow: 0 0 32px rgba(255, 143, 184, 0.3);
+
+  --font-display: 'Baloo 2', 'Nunito', system-ui, sans-serif;
+  --font-body: 'Nunito', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --display-weight: 800;
+  --display-tracking: -0.01em;
+  --display-transform: none;
+
+  --radius-sm: 8px;
+  --radius: 14px;
+  --radius-lg: 22px;
+
+  --grid-color: transparent;
+  --grid-size: 0px;
+  --bg-image:
+    radial-gradient(900px 500px at 15% 0%, rgba(255, 143, 184, 0.18), transparent 60%),
+    radial-gradient(700px 500px at 100% 20%, rgba(127, 227, 255, 0.14), transparent 60%),
+    radial-gradient(900px 600px at 50% 110%, rgba(255, 211, 110, 0.12), transparent 60%);
+}
+
+/* ---------------------------------------------------------------------
+   THEME C — DAYLIGHT
+   Illustrated notebook. Warm off-white paper, ink typography, delicate
+   rules, rust & ink-green accents. Calm, readable, made for writing.
+   --------------------------------------------------------------------- */
+[data-theme='daylight'] {
+  color-scheme: light;
+  --bg: #f6efe3;
+  --bg-2: #f1e8d9;
+  --surface: #fffaf1;
+  --surface-2: #f8f1e4;
+  --surface-raised: #ffffff;
+  --line: rgba(40, 32, 24, 0.14);
+  --line-strong: rgba(40, 32, 24, 0.32);
+  --ink: #1f1a15;
+  --ink-2: #5c5349;
+  --ink-3: #9a8f82;
+  --accent: #b5471f;
+  --accent-ink: #fff6ef;
+  --accent-soft: rgba(181, 71, 31, 0.1);
+  --accent-2: #2e6b5a;
+  --accent-2-soft: rgba(46, 107, 90, 0.12);
+  --accent-3: #c99a2e;
+  --accent-3-soft: rgba(201, 154, 46, 0.16);
+  --ok: #2e7d5b;
+  --warn: #b7791f;
+  --danger: #b4303e;
+  --info: #2f5f8f;
+  --focus: #b5471f;
+  --shadow: 0 16px 40px -24px rgba(60, 40, 20, 0.35), 0 0 0 1px var(--line);
+  --glow: none;
+
+  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --font-body: 'Source Sans 3', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --display-weight: 700;
+  --display-tracking: -0.02em;
+  --display-transform: none;
+
+  --radius-sm: 3px;
+  --radius: 6px;
+  --radius-lg: 10px;
+
+  --grid-color: rgba(40, 32, 24, 0.045);
+  --grid-size: 28px;
+  --bg-image: radial-gradient(1000px 500px at 50% -20%, rgba(201, 154, 46, 0.1), transparent 60%);
+}

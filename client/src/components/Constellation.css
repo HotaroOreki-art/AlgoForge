@@ -1,0 +1,94 @@
+.constellation {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+
+.constellation__edge {
+  stroke-dasharray: var(--len);
+  stroke-dashoffset: var(--len);
+  opacity: 0.7;
+  animation: edge-draw 900ms var(--ease-out) forwards;
+  animation-delay: calc(300ms + var(--i) * 110ms);
+}
+@keyframes edge-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.constellation__node {
+  opacity: 0;
+  animation: node-in 600ms var(--ease-out) forwards;
+  animation-delay: calc(100ms + var(--i) * 90ms);
+}
+@keyframes node-in {
+  from {
+    opacity: 0;
+    transform: translate(var(--tx, 0), var(--ty, 0)) scale(0.6);
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.constellation__dot {
+  fill: var(--bg);
+  stroke: var(--accent);
+  stroke-width: 2;
+}
+.constellation__node:nth-child(3n) .constellation__dot {
+  stroke: var(--accent-2);
+}
+.constellation__node:nth-child(5n) .constellation__dot {
+  stroke: var(--accent-3);
+}
+.constellation__halo {
+  opacity: 0.6;
+  animation: halo-breathe 4s ease-in-out infinite;
+  animation-delay: calc(var(--i) * 300ms);
+}
+@keyframes halo-breathe {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.constellation__label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  fill: var(--ink-2);
+  letter-spacing: 0.04em;
+}
+
+/* Reduced motion: everything visible immediately, nothing moves. */
+.constellation--static .constellation__edge,
+.constellation--static .constellation__node,
+.constellation--static .constellation__halo {
+  animation: none;
+  opacity: 1;
+  stroke-dashoffset: 0;
+}
+
+/* Dreamscape: softer, rounder, warmer */
+[data-theme='dreamscape'] .constellation__dot {
+  stroke-width: 3;
+}
+[data-theme='dreamscape'] .constellation__orbits {
+  stroke-dasharray: 1 6;
+}
+/* Daylight: ink on paper */
+[data-theme='daylight'] .constellation__halo {
+  display: none;
+}
+[data-theme='daylight'] .constellation__dot {
+  fill: var(--surface);
+}
+[data-theme='daylight'] .constellation__edges {
+  stroke: var(--ink-2);
+}

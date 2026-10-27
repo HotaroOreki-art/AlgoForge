@@ -16,6 +16,7 @@
     "test:e2e": "playwright test"
   },
   "devDependencies": {
+    "@playwright/test": "^1.51.1",
     "concurrently": "^9.1.2"
   },
   "engines": {
